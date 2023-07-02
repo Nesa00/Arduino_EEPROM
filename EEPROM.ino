@@ -4,7 +4,7 @@ void Read_EEPROM();
 void Write_EEPROM();
 void Clear_EEPROM();
 
-const int MAX_TEXT_LENGTH = 100;  // Maximum length of the text to be written
+const int MAX_TEXT_LENGTH = 300;  // Maximum length of the text to be written
 const int EEPROM_SIZE = EEPROM.length();  // Total size of the EEPROM
 
 void setup() {
@@ -109,6 +109,12 @@ void Write_EEPROM() {
       }
 
       address++;
+    }
+
+    // Check if there is enough space in EEPROM for the new text
+    if (address + textLength >= EEPROM_SIZE) {
+      Serial.println("Not enough space in EEPROM to store the text!");
+      return;
     }
 
     // Write the new text to EEPROM starting from the first empty space
